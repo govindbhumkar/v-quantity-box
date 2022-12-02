@@ -94,7 +94,7 @@ export default {
 ### Methods
 
 (See Above script example to get better idea of methods)
-- (README file is still under writing process..)
+*- (README file is still under writing process..)*
 
 ### License
 

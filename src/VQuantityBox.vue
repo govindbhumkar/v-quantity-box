@@ -6,7 +6,7 @@
         <v-col cols="5">
             <v-text-field :solo="solo" :dense="dense" :dark="dark" :outlined="outlined" v-model="editedItem.description" @keyup.enter="onEnter" :color="editedColor" :label="descriptionLabel"></v-text-field>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="2" :align-self="dense ? 'auto' : 'center'">
             <v-btn icon @click="onEnter">
                 <v-icon color="success" v-if="editedIndex === -1">mdi-plus</v-icon>
                 <v-icon color="warning" v-else>mdi-sync</v-icon>
