@@ -1,0 +1,28 @@
+{
+  "name": "v-quantity-box",
+  "version": "1.0.2",
+  "description": "Vuetify combo input box for adding quantity values with description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vuetifycombo",
+    "vuetifytextfield",
+    "combobox",
+    "vuetifybox",
+    "quantity",
+    "quantityinput",
+    "quantitybox",
+    "combo",
+    "vue",
+    "vue.js",
+    "vuetify",
+    "vuetifyjs"
+  ],
+  "author": "govindbhumkar",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
