@@ -13,6 +13,7 @@ Vuetify combo input box for adding **Quantity** values with **Description**
 - Better use in inventory software where additional description needs while adding/updating each quantity
 - Shows sum total of quantity as hint under quantity text-field
 - Update & Delete quantity via v-chip component
+- Reverse/swap text fields
 
 ### Installation
 
@@ -49,7 +50,23 @@ Below code in the ```<template>```:
 <VQuantityBox 
 dense 
 dark 
+:quantity-array="quantity" 
+@on-add="addToQuantity" 
+@on-update="updateQuantity" 
+@on-input="onQuantityInput" 
+@on-chip-close="removeQuantity" 
+></VQuantityBox>
+```
+
+> Reverse text fields, change text field labels, add margin between chip content & chip close icon
+
+![enter image description here](https://i.ibb.co/Qb3S6Th/VQuantity-Box-03.png)
+```html
+<VQuantityBox 
+dense 
+dark 
 outlined 
+reverse-fields 
 color="info" 
 :chip-close-margin="4" 
 :quantity-array="quantity" 
@@ -57,6 +74,8 @@ color="info"
 @on-update="updateQuantity" 
 @on-input="onQuantityInput" 
 @on-chip-close="removeQuantity" 
+quantity-label="Pieces" 
+description-label="Information"
 ></VQuantityBox>
 ```
 
@@ -100,7 +119,8 @@ export default {
  - **quantity-array** (Array): Array property to store values.
  - **quantity-label** (String): Label for Quantity field. (Default: Quantity)
  - **description-label** (String): Label for Description field. (Default: Description)
- - **chip-close-margin** (Number): Margin between chip content & chip close icon. (Default: 2)
+ - **chip-close-margin** (Number): Margin between chip content & chip close icon. 
+ - **reverse-fields** (Number): Reverse/Swap text fields. (Default: false)
 ### Methods
 
 (See Above script example to get better idea about methods)

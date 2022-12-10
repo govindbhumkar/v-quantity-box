@@ -1,6 +1,6 @@
 {
   "name": "v-quantity-box",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Vuetify combo input box for adding quantity values with description",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,8 @@
     "quantity",
     "quantityinput",
     "quantitybox",
+    "inputbox",
+    "inputfield",
     "combo",
     "vue",
     "vue.js",
