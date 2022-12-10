@@ -6,7 +6,6 @@
 
 Vuetify combo input box for adding **Quantity** values with **Description**
 
-*(README file is still under writing process..)*
 
 ## Features
 - This package contains two text-fields - 1) Quantity 2) Description
@@ -47,7 +46,18 @@ vue add vuetify
 
 Below code in the ```<template>```:
 ```html
-<VQuantityBox dense dark outlined color="info" :quantity-array="quantity" @on-add="addToQuantity" @on-update="updateQuantity" @on-input="onQuantityInput" @on-chip-close="removeQuantity"></VQuantityBox>
+<VQuantityBox 
+dense 
+dark 
+outlined 
+color="info" 
+:chip-close-margin="4" 
+:quantity-array="quantity" 
+@on-add="addToQuantity" 
+@on-update="updateQuantity" 
+@on-input="onQuantityInput" 
+@on-chip-close="removeQuantity" 
+></VQuantityBox>
 ```
 
 ### Usage
@@ -90,12 +100,13 @@ export default {
  - **quantity-array** (Array): Array property to store values.
  - **quantity-label** (String): Label for Quantity field. (Default: Quantity)
  - **description-label** (String): Label for Description field. (Default: Description)
-
+ - **chip-close-margin** (Number): Margin between chip content & chip close icon. (Default: 2)
 ### Methods
 
-(See Above script example to get better idea of methods)
-*- (README file is still under writing process..)*
+(See Above script example to get better idea about methods)
 
+[Buy a Tea](https://paypal.me/GovindBhumkarIN?country.x=IN&locale.x=en_GB)
 ### License
+
 
 MIT

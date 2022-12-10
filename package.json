@@ -1,6 +1,6 @@
 {
   "name": "v-quantity-box",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Vuetify combo input box for adding quantity values with description",
   "main": "index.js",
   "scripts": {
@@ -29,8 +29,5 @@
   "bugs": {
     "url": "https://github.com/govindbhumkar/v-quantity-box/issues"
   },
-  "homepage": "https://github.com/govindbhumkar/v-quantity-box",
-  "dependencies": {
-    "lodash": "^4.17.21"
-  }
+  "homepage": "https://github.com/govindbhumkar/v-quantity-box"
 }

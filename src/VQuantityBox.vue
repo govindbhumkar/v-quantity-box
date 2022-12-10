@@ -1,7 +1,7 @@
 <template>
     <v-row dense>
         <v-col cols="5">
-            <v-text-field :solo="solo" :dense="dense" :dark="dark" :outlined="outlined" type="number" v-model.number="editedItem.value" @keyup.enter="onEnter" :hint="`Total: ${sum}, Count: ${quantityArraySize}`" persistent-hint :color="editedColor" :label="quantityLabel"></v-text-field>
+            <v-text-field :solo="solo" :dense="dense" :dark="dark" :outlined="outlined" type="number" v-model.number="editedItem.value" @keyup.enter="onEnter" :hint="`Total: ${total}, Count: ${count}`" persistent-hint :color="editedColor" :label="quantityLabel"></v-text-field>
         </v-col>
         <v-col cols="5">
             <v-text-field :solo="solo" :dense="dense" :dark="dark" :outlined="outlined" v-model="editedItem.description" @keyup.enter="onEnter" :color="editedColor" :label="descriptionLabel"></v-text-field>
@@ -15,7 +15,7 @@
         <v-col cols="12">
             <v-chip-group v-model="selected" active-class="yellow--text" column @change="onChipChange">
                 <v-chip small :color="color" label close v-for="(quantity, index) in quantityArray" :key="index" @click:close="onChipClose(index)">
-                    <span class="pr-2">
+                    <span :class="`mr-${chipCloseMargin}`">
                         {{ quantity.value }} - {{ quantity.description }}
                     </span>
                 </v-chip>
@@ -24,7 +24,6 @@
     </v-row>
 </template>
 <script>
-import _ from 'lodash'
 export default {
     props: {
         quantityArray: Array,
@@ -56,6 +55,10 @@ export default {
             type: String,
             default: 'Description'
         },
+        chipCloseMargin: {
+            type: Number,
+            default: 2
+        }
     },
     data: () => ({
         editedItem: {
@@ -67,24 +70,14 @@ export default {
             description: '',
         },
         editedIndex: -1,
-        selected: '',
-        lastEdited: [],
-        lastEditedIndex: -1,
+        selected: ''
     }),
     computed: {
-        sum() {
-            if (this.quantityArray) {
-                return _.toString(_.sumBy(this.quantityArray, o => o.value))
-            } else {
-                return 0
-            }
+        total() {
+            return this.quantityArray.length ? this.quantityArray.map(i => i.value).reduce((a, b) => a + b) : 0
         },
-        quantityArraySize() {
-            if (!_.isEmpty(this.quantityArray)) {
-                return _.size(this.quantityArray)
-            } else {
-                return 0
-            }
+        count() {
+            return this.quantityArray.length ? this.quantityArray.length : 0
         },
         editedColor() {
             return this.editedIndex > -1 ? 'warning' : this.color
@@ -104,32 +97,20 @@ export default {
     },
     methods: {
         onEnter() {
-            if (this.editedIndex > -1) {
-                this.$emit('on-update', { index: this.editedIndex, item: this.editedItem })
-            } else {
-                this.$emit('on-add', this.editedItem)
-            }
+            this.editedIndex > -1 ? this.$emit('on-update', { index: this.editedIndex, item: this.editedItem }) : this.$emit('on-add', this.editedItem)
             this.resetEditedItem()
         },
         onChipClose(index) {
-            if (index !== -1) {
-                this.lastEdited.push(this.quantityArray[index])
-                this.lastEditedIndex = index
-                this.$emit('on-chip-close', index)
-            }
+            index > -1 ? this.$emit('on-chip-close', index) : this.resetEditedItem()
         },
         onChipChange() {
-            if (!_.isUndefined(this.selected)) {
-                this.editedItem = _.assign({}, this.quantityArray[this.selected])
-                this.editedIndex = this.selected
-            } else if (_.isUndefined(this.selected)) {
-                this.resetEditedItem()
-            }
+            this.selected === undefined ? this.resetEditedItem() : (this.editedItem = Object.assign({}, this.quantityArray[this.selected]),
+                this.editedIndex = this.selected)
         },
         resetEditedItem() {
-            this.editedItem = _.assign({}, this.defaultItem)
+            this.editedItem = Object.assign({}, this.defaultItem)
             this.editedIndex = -1
-        },
+        }
     }
 }
 </script>
