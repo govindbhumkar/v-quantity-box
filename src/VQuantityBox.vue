@@ -1,11 +1,21 @@
 <template>
     <v-row dense>
-        <v-col cols="5">
+        <template v-if="!reverseFields">
+            <v-col cols="5">
             <v-text-field :solo="solo" :dense="dense" :dark="dark" :outlined="outlined" type="number" v-model.number="editedItem.value" @keyup.enter="onEnter" :hint="`Total: ${total}, Count: ${count}`" persistent-hint :color="editedColor" :label="quantityLabel"></v-text-field>
         </v-col>
         <v-col cols="5">
             <v-text-field :solo="solo" :dense="dense" :dark="dark" :outlined="outlined" v-model="editedItem.description" @keyup.enter="onEnter" :color="editedColor" :label="descriptionLabel"></v-text-field>
         </v-col>
+        </template>
+        <template v-else-if="reverseFields">
+            <v-col cols="5">
+                <v-text-field :solo="solo" :dense="dense" :dark="dark" :outlined="outlined" v-model="editedItem.description" @keyup.enter="onEnter" :color="editedColor" :label="descriptionLabel"></v-text-field>
+            </v-col>
+            <v-col cols="5">
+                <v-text-field :solo="solo" :dense="dense" :dark="dark" :outlined="outlined" type="number" v-model.number="editedItem.value" @keyup.enter="onEnter" :hint="`Total: ${total}, Count: ${count}`" persistent-hint :color="editedColor" :label="quantityLabel"></v-text-field>
+            </v-col>
+        </template>
         <v-col cols="2" :align-self="dense ? 'auto' : 'center'">
             <v-btn icon @click="onEnter">
                 <v-icon color="success" v-if="editedIndex === -1">mdi-plus</v-icon>
@@ -15,7 +25,10 @@
         <v-col cols="12">
             <v-chip-group v-model="selected" active-class="yellow--text" column @change="onChipChange">
                 <v-chip small :color="color" label close v-for="(quantity, index) in quantityArray" :key="index" @click:close="onChipClose(index)">
-                    <span :class="`mr-${chipCloseMargin}`">
+                    <span v-if="reverseFields" :class="`mr-${chipCloseMargin}`">
+                        {{ quantity.description }} - {{ quantity.value }}
+                    </span>
+                    <span v-else-if="!reverseFields" :class="`mr-${chipCloseMargin}`">
                         {{ quantity.value }} - {{ quantity.description }}
                     </span>
                 </v-chip>
@@ -58,6 +71,10 @@ export default {
         chipCloseMargin: {
             type: Number,
             default: 2
+        },
+        reverseFields: {
+            type: Boolean,
+            default: false
         }
     },
     data: () => ({
@@ -97,7 +114,7 @@ export default {
     },
     methods: {
         onEnter() {
-            this.editedIndex > -1 ? this.$emit('on-update', { index: this.editedIndex, item: this.editedItem }) : this.$emit('on-add', this.editedItem)
+            this.editedIndex > -1 ? this.$emit('on-update', { index: this.editedIndex, item: this.editedItem }) : this.$emit('on-add', this.editedItem),
             this.resetEditedItem()
         },
         onChipClose(index) {
